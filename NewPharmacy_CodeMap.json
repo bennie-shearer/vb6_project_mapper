@@ -1,0 +1,316 @@
+{
+    "project": {
+        "name": "Project1",
+        "path": "VB6-PharmacyManagement",
+        "filename": "newpharm.vbp"
+    },
+    "components": [
+        {
+            "name": "Form7",
+            "type": "Form",
+            "filename": "Form7.frm",
+            "dependencies": [
+                "DataReport7"
+            ],
+            "dependents": [],
+            "dependency_count": 1,
+            "dependent_count": 0
+        },
+        {
+            "name": "Form8",
+            "type": "Form",
+            "filename": "Form8.frm",
+            "dependencies": [
+                "DataReport6"
+            ],
+            "dependents": [],
+            "dependency_count": 1,
+            "dependent_count": 0
+        },
+        {
+            "name": "Form1",
+            "type": "Form",
+            "filename": "Form1.frm",
+            "dependencies": [
+                "MDIForm1"
+            ],
+            "dependents": [
+                "medd",
+                "Form10"
+            ],
+            "dependency_count": 1,
+            "dependent_count": 2
+        },
+        {
+            "name": "Form3",
+            "type": "Form",
+            "filename": "Form3.frm",
+            "dependencies": [
+                "DataReport2"
+            ],
+            "dependents": [],
+            "dependency_count": 1,
+            "dependent_count": 0
+        },
+        {
+            "name": "Form4",
+            "type": "Form",
+            "filename": "Form4.frm",
+            "dependencies": [
+                "DataReport3"
+            ],
+            "dependents": [],
+            "dependency_count": 1,
+            "dependent_count": 0
+        },
+        {
+            "name": "Form5",
+            "type": "Form",
+            "filename": "Form5.frm",
+            "dependencies": [
+                "DataReport8"
+            ],
+            "dependents": [],
+            "dependency_count": 1,
+            "dependent_count": 0
+        },
+        {
+            "name": "MDIForm1",
+            "type": "Form",
+            "filename": "MDIForm1.frm",
+            "dependencies": [
+                "medd"
+            ],
+            "dependents": [
+                "Form1"
+            ],
+            "dependency_count": 1,
+            "dependent_count": 1
+        },
+        {
+            "name": "Form2",
+            "type": "Form",
+            "filename": "Form2.frm",
+            "dependencies": [
+                "DataReport1"
+            ],
+            "dependents": [],
+            "dependency_count": 1,
+            "dependent_count": 0
+        },
+        {
+            "name": "Form6",
+            "type": "Form",
+            "filename": "Form6.frm",
+            "dependencies": [
+                "DataReport5"
+            ],
+            "dependents": [],
+            "dependency_count": 1,
+            "dependent_count": 0
+        },
+        {
+            "name": "medd",
+            "type": "Form",
+            "filename": "medd.frm",
+            "dependencies": [
+                "DataReport4",
+                "Form1"
+            ],
+            "dependents": [
+                "MDIForm1"
+            ],
+            "dependency_count": 2,
+            "dependent_count": 1
+        },
+        {
+            "name": "Module1",
+            "type": "Module",
+            "filename": "Module1",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "DataReport1",
+            "type": "Designer",
+            "filename": "DataReport1.Dsr",
+            "dependencies": [],
+            "dependents": [
+                "Form2"
+            ],
+            "dependency_count": 0,
+            "dependent_count": 1
+        },
+        {
+            "name": "DataEnvironment1",
+            "type": "Designer",
+            "filename": "DataEnvironment1.Dsr",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "DataReport2",
+            "type": "Designer",
+            "filename": "DataReport2.Dsr",
+            "dependencies": [],
+            "dependents": [
+                "Form3"
+            ],
+            "dependency_count": 0,
+            "dependent_count": 1
+        },
+        {
+            "name": "DataEnvironment2",
+            "type": "Designer",
+            "filename": "DataEnvironment2.Dsr",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "DataReport3",
+            "type": "Designer",
+            "filename": "DataReport3.Dsr",
+            "dependencies": [],
+            "dependents": [
+                "Form4"
+            ],
+            "dependency_count": 0,
+            "dependent_count": 1
+        },
+        {
+            "name": "DataEnvironment3",
+            "type": "Designer",
+            "filename": "DataEnvironment3.Dsr",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "DataReport4",
+            "type": "Designer",
+            "filename": "DataReport4.Dsr",
+            "dependencies": [],
+            "dependents": [
+                "medd"
+            ],
+            "dependency_count": 0,
+            "dependent_count": 1
+        },
+        {
+            "name": "DataEnvironment4",
+            "type": "Designer",
+            "filename": "DataEnvironment4.Dsr",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "DataReport5",
+            "type": "Designer",
+            "filename": "DataReport5.Dsr",
+            "dependencies": [],
+            "dependents": [
+                "Form6"
+            ],
+            "dependency_count": 0,
+            "dependent_count": 1
+        },
+        {
+            "name": "DataEnvironment5",
+            "type": "Designer",
+            "filename": "DataEnvironment5.Dsr",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "DataReport6",
+            "type": "Designer",
+            "filename": "DataReport6.Dsr",
+            "dependencies": [],
+            "dependents": [
+                "Form8"
+            ],
+            "dependency_count": 0,
+            "dependent_count": 1
+        },
+        {
+            "name": "DataEnvironment6",
+            "type": "Designer",
+            "filename": "DataEnvironment6.Dsr",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "DataReport7",
+            "type": "Designer",
+            "filename": "DataReport7.Dsr",
+            "dependencies": [],
+            "dependents": [
+                "Form7"
+            ],
+            "dependency_count": 0,
+            "dependent_count": 1
+        },
+        {
+            "name": "DataEnvironment7",
+            "type": "Designer",
+            "filename": "DataEnvironment7.Dsr",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "DataReport8",
+            "type": "Designer",
+            "filename": "DataReport8.Dsr",
+            "dependencies": [],
+            "dependents": [
+                "Form5"
+            ],
+            "dependency_count": 0,
+            "dependent_count": 1
+        },
+        {
+            "name": "DataEnvironment8",
+            "type": "Designer",
+            "filename": "DataEnvironment8.Dsr",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "Form10",
+            "type": "Form",
+            "filename": "Form10.frm",
+            "dependencies": [
+                "Form1"
+            ],
+            "dependents": [],
+            "dependency_count": 1,
+            "dependent_count": 0
+        }
+    ],
+    "statistics": {
+        "total_components": 28,
+        "forms": 11,
+        "modules": 1,
+        "classes": 0,
+        "user_controls": 0,
+        "property_pages": 0,
+        "designers": 16
+    }
+}

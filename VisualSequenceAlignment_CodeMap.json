@@ -1,0 +1,27 @@
+{
+    "project": {
+        "name": "VisualGlobalSequenceAlignment",
+        "path": "VB6-VisualSequenceAlignment",
+        "filename": "AlignDNA.vbp"
+    },
+    "components": [
+        {
+            "name": "AlignDNA",
+            "type": "Form",
+            "filename": "AlignDNA.frm",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        }
+    ],
+    "statistics": {
+        "total_components": 1,
+        "forms": 1,
+        "modules": 0,
+        "classes": 0,
+        "user_controls": 0,
+        "property_pages": 0,
+        "designers": 0
+    }
+}

@@ -1,0 +1,67 @@
+{
+    "version": 1,
+    "disable_existing_loggers": false,
+    "formatters": {
+        "console": {
+            "format": "%(levelname)s: %(message)s"
+        },
+        "file": {
+            "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        }
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "level": "INFO",
+            "formatter": "console",
+            "stream": "ext://sys.stderr"
+        },
+        "debug_file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "DEBUG",
+            "formatter": "file",
+            "filename": "logs/debug/debug_TIMESTAMP.log",
+            "maxBytes": 5242880,
+            "backupCount": 5
+        },
+        "info_file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "INFO",
+            "formatter": "file",
+            "filename": "logs/info/info_TIMESTAMP.log",
+            "maxBytes": 5242880,
+            "backupCount": 5
+        },
+        "warning_file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "WARNING",
+            "formatter": "file",
+            "filename": "logs/warning/warning_TIMESTAMP.log",
+            "maxBytes": 5242880,
+            "backupCount": 5
+        },
+        "error_file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "ERROR",
+            "formatter": "file",
+            "filename": "logs/error/error_TIMESTAMP.log",
+            "maxBytes": 5242880,
+            "backupCount": 5
+        },
+        "critical_file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "CRITICAL",
+            "formatter": "file",
+            "filename": "logs/critical/critical_TIMESTAMP.log",
+            "maxBytes": 5242880,
+            "backupCount": 5
+        }
+    },
+    "loggers": {
+        "": {
+            "level": "DEBUG",
+            "handlers": ["console", "debug_file", "info_file", "warning_file", "error_file", "critical_file"],
+            "propagate": true
+        }
+    }
+}

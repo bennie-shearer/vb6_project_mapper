@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project1 - Code Map</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; 
+            line-height: 1.6; 
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        h1 { color: #2c3e50; border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; }
+        h2 { color: #3498db; margin-top: 30px; }
+        h3 { color: #2980b9; }
+        h4 { color: #16a085; }
+        h5 { color: #27ae60; margin-top: 15px; margin-bottom: 5px; }
+        .container { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 20px; }
+        .component-list { 
+            width: 300px; 
+            background: #fff; 
+            padding: 15px; 
+            border-radius: 5px; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .component-details { 
+            flex: 1; 
+            min-width: 300px; 
+            background: #fff; 
+            padding: 15px; 
+            border-radius: 5px; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .component { 
+            margin-bottom: 8px; 
+            cursor: pointer; 
+            padding: 8px; 
+            border-radius: 4px; 
+            transition: all 0.2s;
+        }
+        .component:hover { 
+            transform: translateX(5px);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .component.active {
+            background-color: #e3f2fd;
+            border-left: 4px solid #2196f3;
+        }
+        .Form { background-color: #e3f2fd; border-left: 4px solid #2196f3; }
+        .Module { background-color: #e8f5e9; border-left: 4px solid #4caf50; }
+        .Class { background-color: #fff3e0; border-left: 4px solid #ff9800; }
+        .UserControl { background-color: #f3e5f5; border-left: 4px solid #9c27b0; }
+        .PropertyPage { background-color: #fffde7; border-left: 4px solid #ffc107; }
+        .Designer { background-color: #ffebee; border-left: 4px solid #f44336; }
+        table { 
+            border-collapse: collapse; 
+            width: 100%; 
+            margin: 15px 0; 
+            background-color: #fff;
+        }
+        th, td { border: 1px solid #e1e1e1; padding: 10px; text-align: left; }
+        th { background-color: #f5f5f5; font-weight: 600; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        .dependency-graph { 
+            margin-top: 40px; 
+            border: 1px solid #e1e1e1; 
+            padding: 20px; 
+            border-radius: 5px; 
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .legend { display: flex; flex-wrap: wrap; gap: 10px; margin: 15px 0; }
+        .legend-item { display: flex; align-items: center; margin-right: 15px; }
+        .legend-color { width: 20px; height: 20px; margin-right: 8px; border-radius: 3px; }
+        .mermaid { 
+            overflow: auto; 
+            max-width: 100%; 
+            min-height: 300px;
+            position: relative;
+        }
+        footer { 
+            margin-top: 50px; 
+            text-align: center; 
+            color: #7f8c8d; 
+            font-size: 0.9em; 
+            padding-top: 20px; 
+            border-top: 1px solid #ecf0f1; 
+        }
+        .search-box {
+            margin-bottom: 15px;
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .no-results {
+            color: #999;
+            font-style: italic;
+            padding: 10px;
+        }
+        .button {
+            padding: 8px 16px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #2980b9;
+        }
+        @media (max-width: 768px) {
+            .container { flex-direction: column; }
+            .component-list, .component-details { width: 100%; }
+        }
+
+        /* Styles for enhanced visualization */
+        .diagram-tabs {
+            display: flex;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+
+        .tab-button {
+            padding: 10px 20px;
+            background: #f5f5f5;
+            border: none;
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+            cursor: pointer;
+            font-weight: normal;
+            white-space: nowrap;
+        }
+
+        .tab-button.active {
+            background: #2196f3;
+            color: white;
+            font-weight: bold;
+        }
+
+        .tab-content {
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+        }
+
+        .filter-controls {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .search-control {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            min-width: 250px;
+        }
+
+        .component-select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            min-width: 300px;
+        }
+
+        .control-button {
+            padding: 8px 16px;
+            background: #2196f3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .control-button:hover {
+            background: #0d8aee;
+        }
+
+        .depth-control {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .depth-control select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .error-message {
+            padding: 15px;
+            background: #ffebee;
+            border: 1px solid #f44336;
+            border-radius: 4px;
+            color: #d32f2f;
+            margin-top: 15px;
+        }
+
+        /* Improved diagram controls positioning and styling */
+        .diagram-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 5px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            z-index: 100;
+            display: flex;
+            gap: 5px;
+        }
+
+        .diagram-controls button {
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            background: white;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .diagram-controls button:hover {
+            background: #f5f5f5;
+        }
+    </style>
+    <script>
+        function showComponentDetails(index) {
+            // Update active class
+            const components = document.getElementsByClassName('component');
+            for (let i = 0; i < components.length; i++) {
+                components[i].classList.remove('active');
+            }
+            components[index].classList.add('active');
+
+            // Show selected component details
+            const details = document.getElementsByClassName('detail-section');
+            for (let i = 0; i < details.length; i++) {
+                details[i].style.display = 'none';
+            }
+            document.getElementById('component-' + index).style.display = 'block';
+        }
+
+        function searchComponents() {
+            const searchTerm = document.getElementById('component-search').value.toLowerCase();
+            const components = document.getElementsByClassName('component');
+            let visibleCount = 0;
+
+            for (let i = 0; i < components.length; i++) {
+                const componentText = components[i].textContent.toLowerCase();
+                if (componentText.includes(searchTerm)) {
+                    components[i].style.display = '';
+                    visibleCount++;
+                } else {
+                    components[i].style.display = 'none';
+                }
+            }
+
+            // Show no results message if needed
+            const noResults = document.getElementById('no-search-results');
+            if (visibleCount === 0) {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Project1 - Code Map</h1>
+    <p>Project Path: VB6-PharmacyManagement</p>
+    <h2>Project Summary</h2>
+    <table>
+        <tr><th>Component Type</th><th>Count</th></tr>
+        <tr><td>Forms</td><td>11</td></tr>
+        <tr><td>Modules</td><td>1</td></tr>
+        <tr><td>Classes</td><td>0</td></tr>
+        <tr><td>User Controls</td><td>0</td></tr>
+        <tr><td>Property Pages</td><td>0</td></tr>
+        <tr><td>Designers</td><td>16</td></tr>
+        <tr><th>Total</th><th>28</th></tr>
+    </table>
+    <div class='legend'>
+        <div class='legend-item'><div class='legend-color Form'></div>Form</div>
+        <div class='legend-item'><div class='legend-color Module'></div>Module</div>
+        <div class='legend-item'><div class='legend-color Class'></div>Class</div>
+        <div class='legend-item'><div class='legend-color UserControl'></div>User Control</div>
+        <div class='legend-item'><div class='legend-color PropertyPage'></div>Property Page</div>
+        <div class='legend-item'><div class='legend-color Designer'></div>Designer</div>
+    </div>
+    <h2>Project Components</h2>
+    <div class='container'>
+        <div class='component-list'>
+            <h3>Components</h3>
+            <input type='text' id='component-search' class='search-box' placeholder='Search components...' oninput='searchComponents()'>
+            <div class='component Form' onclick='showComponentDetails(0)'>Form7 (Form)</div>
+            <div class='component Form' onclick='showComponentDetails(1)'>Form8 (Form)</div>
+            <div class='component Form' onclick='showComponentDetails(2)'>Form1 (Form)</div>
+            <div class='component Form' onclick='showComponentDetails(3)'>Form3 (Form)</div>
+            <div class='component Form' onclick='showComponentDetails(4)'>Form4 (Form)</div>
+            <div class='component Form' onclick='showComponentDetails(5)'>Form5 (Form)</div>
+            <div class='component Form' onclick='showComponentDetails(6)'>MDIForm1 (Form)</div>
+            <div class='component Form' onclick='showComponentDetails(7)'>Form2 (Form)</div>
+            <div class='component Form' onclick='showComponentDetails(8)'>Form6 (Form)</div>
+            <div class='component Form' onclick='showComponentDetails(9)'>medd (Form)</div>
+            <div class='component Module' onclick='showComponentDetails(10)'>Module1 (Module)</div>
+            <div class='component Designer' onclick='showComponentDetails(11)'>DataReport1 (Designer)</div>
+            <div class='component Designer' onclick='showComponentDetails(12)'>DataEnvironment1 (Designer)</div>
+            <div class='component Designer' onclick='showComponentDetails(13)'>DataReport2 (Designer)</div>
+            <div class='component Designer' onclick='showComponentDetails(14)'>DataEnvironment2 (Designer)</div>
+            <div class='component Designer' onclick='showComponentDetails(15)'>DataReport3 (Designer)</div>
+            <div class='component Designer' onclick='showComponentDetails(16)'>DataEnvironment3 (Designer)</div>
+            <div class='component Designer' onclick='showComponentDetails(17)'>DataReport4 (Designer)</div>
+            <div class='component Designer' onclick='showComponentDetails(18)'>DataEnvironment4 (Designer)</div>
+            <div class='component Designer' onclick='showComponentDetails(19)'>DataReport5 (Designer)</div>
+            <div class='component Designer' onclick='showComponentDetails(20)'>DataEnvironment5 (Designer)</div>
+            <div class='component Designer' onclick='showComponentDetails(21)'>DataReport6 (Designer)</div>
+            <div class='component Designer' onclick='showComponentDetails(22)'>DataEnvironment6 (Designer)</div>
+            <div class='component Designer' onclick='showComponentDetails(23)'>DataReport7 (Designer)</div>
+            <div class='component Designer' onclick='showComponentDetails(24)'>DataEnvironment7 (Designer)</div>
+            <div class='component Designer' onclick='showComponentDetails(25)'>DataReport8 (Designer)</div>
+            <div class='component Designer' onclick='showComponentDetails(26)'>DataEnvironment8 (Designer)</div>
+            <div class='component Form' onclick='showComponentDetails(27)'>Form10 (Form)</div>
+            <div id='no-search-results' class='no-results' style='display: none;'>No components found</div>
+        </div>
+        <div class='component-details'>
+            <h3>Component Details</h3>
+            <div id='component-0' class='detail-section' >
+                <h4>Form7</h4>
+                <table>
+                    <tr><td>Type:</td><td>Form</td></tr>
+                    <tr><td>File:</td><td>Form7.frm</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <ul>
+                    <li>DataReport7</li>
+                </ul>
+                <h5>Referenced by:</h5>
+                <p>Not referenced by any component</p>
+            </div>
+            <div id='component-1' class='detail-section' style='display:none;'>
+                <h4>Form8</h4>
+                <table>
+                    <tr><td>Type:</td><td>Form</td></tr>
+                    <tr><td>File:</td><td>Form8.frm</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <ul>
+                    <li>DataReport6</li>
+                </ul>
+                <h5>Referenced by:</h5>
+                <p>Not referenced by any component</p>
+            </div>
+            <div id='component-2' class='detail-section' style='display:none;'>
+                <h4>Form1</h4>
+                <table>
+                    <tr><td>Type:</td><td>Form</td></tr>
+                    <tr><td>File:</td><td>Form1.frm</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <ul>
+                    <li>MDIForm1</li>
+                </ul>
+                <h5>Referenced by:</h5>
+                <ul>
+                    <li>Form10</li>
+                    <li>medd</li>
+                </ul>
+            </div>
+            <div id='component-3' class='detail-section' style='display:none;'>
+                <h4>Form3</h4>
+                <table>
+                    <tr><td>Type:</td><td>Form</td></tr>
+                    <tr><td>File:</td><td>Form3.frm</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <ul>
+                    <li>DataReport2</li>
+                </ul>
+                <h5>Referenced by:</h5>
+                <p>Not referenced by any component</p>
+            </div>
+            <div id='component-4' class='detail-section' style='display:none;'>
+                <h4>Form4</h4>
+                <table>
+                    <tr><td>Type:</td><td>Form</td></tr>
+                    <tr><td>File:</td><td>Form4.frm</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <ul>
+                    <li>DataReport3</li>
+                </ul>
+                <h5>Referenced by:</h5>
+                <p>Not referenced by any component</p>
+            </div>
+            <div id='component-5' class='detail-section' style='display:none;'>
+                <h4>Form5</h4>
+                <table>
+                    <tr><td>Type:</td><td>Form</td></tr>
+                    <tr><td>File:</td><td>Form5.frm</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <ul>
+                    <li>DataReport8</li>
+                </ul>
+                <h5>Referenced by:</h5>
+                <p>Not referenced by any component</p>
+            </div>
+            <div id='component-6' class='detail-section' style='display:none;'>
+                <h4>MDIForm1</h4>
+                <table>
+                    <tr><td>Type:</td><td>Form</td></tr>
+                    <tr><td>File:</td><td>MDIForm1.frm</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <ul>
+                    <li>medd</li>
+                </ul>
+                <h5>Referenced by:</h5>
+                <ul>
+                    <li>Form1</li>
+                </ul>
+            </div>
+            <div id='component-7' class='detail-section' style='display:none;'>
+                <h4>Form2</h4>
+                <table>
+                    <tr><td>Type:</td><td>Form</td></tr>
+                    <tr><td>File:</td><td>Form2.frm</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <ul>
+                    <li>DataReport1</li>
+                </ul>
+                <h5>Referenced by:</h5>
+                <p>Not referenced by any component</p>
+            </div>
+            <div id='component-8' class='detail-section' style='display:none;'>
+                <h4>Form6</h4>
+                <table>
+                    <tr><td>Type:</td><td>Form</td></tr>
+                    <tr><td>File:</td><td>Form6.frm</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <ul>
+                    <li>DataReport5</li>
+                </ul>
+                <h5>Referenced by:</h5>
+                <p>Not referenced by any component</p>
+            </div>
+            <div id='component-9' class='detail-section' style='display:none;'>
+                <h4>medd</h4>
+                <table>
+                    <tr><td>Type:</td><td>Form</td></tr>
+                    <tr><td>File:</td><td>medd.frm</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <ul>
+                    <li>DataReport4</li>
+                    <li>Form1</li>
+                </ul>
+                <h5>Referenced by:</h5>
+                <ul>
+                    <li>MDIForm1</li>
+                </ul>
+            </div>
+            <div id='component-10' class='detail-section' style='display:none;'>
+                <h4>Module1</h4>
+                <table>
+                    <tr><td>Type:</td><td>Module</td></tr>
+                    <tr><td>File:</td><td>Module1</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <p>No dependencies found</p>
+                <h5>Referenced by:</h5>
+                <p>Not referenced by any component</p>
+            </div>
+            <div id='component-11' class='detail-section' style='display:none;'>
+                <h4>DataReport1</h4>
+                <table>
+                    <tr><td>Type:</td><td>Designer</td></tr>
+                    <tr><td>File:</td><td>DataReport1.Dsr</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <p>No dependencies found</p>
+                <h5>Referenced by:</h5>
+                <ul>
+                    <li>Form2</li>
+                </ul>
+            </div>
+            <div id='component-12' class='detail-section' style='display:none;'>
+                <h4>DataEnvironment1</h4>
+                <table>
+                    <tr><td>Type:</td><td>Designer</td></tr>
+                    <tr><td>File:</td><td>DataEnvironment1.Dsr</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <p>No dependencies found</p>
+                <h5>Referenced by:</h5>
+                <p>Not referenced by any component</p>
+            </div>
+            <div id='component-13' class='detail-section' style='display:none;'>
+                <h4>DataReport2</h4>
+                <table>
+                    <tr><td>Type:</td><td>Designer</td></tr>
+                    <tr><td>File:</td><td>DataReport2.Dsr</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <p>No dependencies found</p>
+                <h5>Referenced by:</h5>
+                <ul>
+                    <li>Form3</li>
+                </ul>
+            </div>
+            <div id='component-14' class='detail-section' style='display:none;'>
+                <h4>DataEnvironment2</h4>
+                <table>
+                    <tr><td>Type:</td><td>Designer</td></tr>
+                    <tr><td>File:</td><td>DataEnvironment2.Dsr</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <p>No dependencies found</p>
+                <h5>Referenced by:</h5>
+                <p>Not referenced by any component</p>
+            </div>
+            <div id='component-15' class='detail-section' style='display:none;'>
+                <h4>DataReport3</h4>
+                <table>
+                    <tr><td>Type:</td><td>Designer</td></tr>
+                    <tr><td>File:</td><td>DataReport3.Dsr</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <p>No dependencies found</p>
+                <h5>Referenced by:</h5>
+                <ul>
+                    <li>Form4</li>
+                </ul>
+            </div>
+            <div id='component-16' class='detail-section' style='display:none;'>
+                <h4>DataEnvironment3</h4>
+                <table>
+                    <tr><td>Type:</td><td>Designer</td></tr>
+                    <tr><td>File:</td><td>DataEnvironment3.Dsr</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <p>No dependencies found</p>
+                <h5>Referenced by:</h5>
+                <p>Not referenced by any component</p>
+            </div>
+            <div id='component-17' class='detail-section' style='display:none;'>
+                <h4>DataReport4</h4>
+                <table>
+                    <tr><td>Type:</td><td>Designer</td></tr>
+                    <tr><td>File:</td><td>DataReport4.Dsr</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <p>No dependencies found</p>
+                <h5>Referenced by:</h5>
+                <ul>
+                    <li>medd</li>
+                </ul>
+            </div>
+            <div id='component-18' class='detail-section' style='display:none;'>
+                <h4>DataEnvironment4</h4>
+                <table>
+                    <tr><td>Type:</td><td>Designer</td></tr>
+                    <tr><td>File:</td><td>DataEnvironment4.Dsr</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <p>No dependencies found</p>
+                <h5>Referenced by:</h5>
+                <p>Not referenced by any component</p>
+            </div>
+            <div id='component-19' class='detail-section' style='display:none;'>
+                <h4>DataReport5</h4>
+                <table>
+                    <tr><td>Type:</td><td>Designer</td></tr>
+                    <tr><td>File:</td><td>DataReport5.Dsr</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <p>No dependencies found</p>
+                <h5>Referenced by:</h5>
+                <ul>
+                    <li>Form6</li>
+                </ul>
+            </div>
+            <div id='component-20' class='detail-section' style='display:none;'>
+                <h4>DataEnvironment5</h4>
+                <table>
+                    <tr><td>Type:</td><td>Designer</td></tr>
+                    <tr><td>File:</td><td>DataEnvironment5.Dsr</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <p>No dependencies found</p>
+                <h5>Referenced by:</h5>
+                <p>Not referenced by any component</p>
+            </div>
+            <div id='component-21' class='detail-section' style='display:none;'>
+                <h4>DataReport6</h4>
+                <table>
+                    <tr><td>Type:</td><td>Designer</td></tr>
+                    <tr><td>File:</td><td>DataReport6.Dsr</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <p>No dependencies found</p>
+                <h5>Referenced by:</h5>
+                <ul>
+                    <li>Form8</li>
+                </ul>
+            </div>
+            <div id='component-22' class='detail-section' style='display:none;'>
+                <h4>DataEnvironment6</h4>
+                <table>
+                    <tr><td>Type:</td><td>Designer</td></tr>
+                    <tr><td>File:</td><td>DataEnvironment6.Dsr</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <p>No dependencies found</p>
+                <h5>Referenced by:</h5>
+                <p>Not referenced by any component</p>
+            </div>
+            <div id='component-23' class='detail-section' style='display:none;'>
+                <h4>DataReport7</h4>
+                <table>
+                    <tr><td>Type:</td><td>Designer</td></tr>
+                    <tr><td>File:</td><td>DataReport7.Dsr</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <p>No dependencies found</p>
+                <h5>Referenced by:</h5>
+                <ul>
+                    <li>Form7</li>
+                </ul>
+            </div>
+            <div id='component-24' class='detail-section' style='display:none;'>
+                <h4>DataEnvironment7</h4>
+                <table>
+                    <tr><td>Type:</td><td>Designer</td></tr>
+                    <tr><td>File:</td><td>DataEnvironment7.Dsr</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <p>No dependencies found</p>
+                <h5>Referenced by:</h5>
+                <p>Not referenced by any component</p>
+            </div>
+            <div id='component-25' class='detail-section' style='display:none;'>
+                <h4>DataReport8</h4>
+                <table>
+                    <tr><td>Type:</td><td>Designer</td></tr>
+                    <tr><td>File:</td><td>DataReport8.Dsr</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <p>No dependencies found</p>
+                <h5>Referenced by:</h5>
+                <ul>
+                    <li>Form5</li>
+                </ul>
+            </div>
+            <div id='component-26' class='detail-section' style='display:none;'>
+                <h4>DataEnvironment8</h4>
+                <table>
+                    <tr><td>Type:</td><td>Designer</td></tr>
+                    <tr><td>File:</td><td>DataEnvironment8.Dsr</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <p>No dependencies found</p>
+                <h5>Referenced by:</h5>
+                <p>Not referenced by any component</p>
+            </div>
+            <div id='component-27' class='detail-section' style='display:none;'>
+                <h4>Form10</h4>
+                <table>
+                    <tr><td>Type:</td><td>Form</td></tr>
+                    <tr><td>File:</td><td>Form10.frm</td></tr>
+                </table>
+                <h5>Dependencies:</h5>
+                <ul>
+                    <li>Form1</li>
+                </ul>
+                <h5>Referenced by:</h5>
+                <p>Not referenced by any component</p>
+            </div>
+        </div>
+    </div>
+    <div class='dependency-graph'>
+        <h2>Dependency Table</h2>
+        <input type='text' id='table-search' class='search-box' placeholder='Search dependency table...' oninput='searchTable()'>
+        <table id='dependency-table'>
+            <tr><th>Component</th><th>Type</th><th>Dependencies</th><th>Referenced By</th></tr>
+            <tr>
+                <td>DataEnvironment1</td>
+                <td>Designer</td>
+                <td>
+None</td>
+                <td>
+None</td>
+            </tr>
+            <tr>
+                <td>DataEnvironment2</td>
+                <td>Designer</td>
+                <td>
+None</td>
+                <td>
+None</td>
+            </tr>
+            <tr>
+                <td>DataEnvironment3</td>
+                <td>Designer</td>
+                <td>
+None</td>
+                <td>
+None</td>
+            </tr>
+            <tr>
+                <td>DataEnvironment4</td>
+                <td>Designer</td>
+                <td>
+None</td>
+                <td>
+None</td>
+            </tr>
+            <tr>
+                <td>DataEnvironment5</td>
+                <td>Designer</td>
+                <td>
+None</td>
+                <td>
+None</td>
+            </tr>
+            <tr>
+                <td>DataEnvironment6</td>
+                <td>Designer</td>
+                <td>
+None</td>
+                <td>
+None</td>
+            </tr>
+            <tr>
+                <td>DataEnvironment7</td>
+                <td>Designer</td>
+                <td>
+None</td>
+                <td>
+None</td>
+            </tr>
+            <tr>
+                <td>DataEnvironment8</td>
+                <td>Designer</td>
+                <td>
+None</td>
+                <td>
+None</td>
+            </tr>
+            <tr>
+                <td>DataReport1</td>
+                <td>Designer</td>
+                <td>
+None</td>
+                <td>
+Form2</td>
+            </tr>
+            <tr>
+                <td>DataReport2</td>
+                <td>Designer</td>
+                <td>
+None</td>
+                <td>
+Form3</td>
+            </tr>
+            <tr>
+                <td>DataReport3</td>
+                <td>Designer</td>
+                <td>
+None</td>
+                <td>
+Form4</td>
+            </tr>
+            <tr>
+                <td>DataReport4</td>
+                <td>Designer</td>
+                <td>
+None</td>
+                <td>
+medd</td>
+            </tr>
+            <tr>
+                <td>DataReport5</td>
+                <td>Designer</td>
+                <td>
+None</td>
+                <td>
+Form6</td>
+            </tr>
+            <tr>
+                <td>DataReport6</td>
+                <td>Designer</td>
+                <td>
+None</td>
+                <td>
+Form8</td>
+            </tr>
+            <tr>
+                <td>DataReport7</td>
+                <td>Designer</td>
+                <td>
+None</td>
+                <td>
+Form7</td>
+            </tr>
+            <tr>
+                <td>DataReport8</td>
+                <td>Designer</td>
+                <td>
+None</td>
+                <td>
+Form5</td>
+            </tr>
+            <tr>
+                <td>Form1</td>
+                <td>Form</td>
+                <td>
+MDIForm1</td>
+                <td>
+Form10, medd</td>
+            </tr>
+            <tr>
+                <td>Form10</td>
+                <td>Form</td>
+                <td>
+Form1</td>
+                <td>
+None</td>
+            </tr>
+            <tr>
+                <td>Form2</td>
+                <td>Form</td>
+                <td>
+DataReport1</td>
+                <td>
+None</td>
+            </tr>
+            <tr>
+                <td>Form3</td>
+                <td>Form</td>
+                <td>
+DataReport2</td>
+                <td>
+None</td>
+            </tr>
+            <tr>
+                <td>Form4</td>
+                <td>Form</td>
+                <td>
+DataReport3</td>
+                <td>
+None</td>
+            </tr>
+            <tr>
+                <td>Form5</td>
+                <td>Form</td>
+                <td>
+DataReport8</td>
+                <td>
+None</td>
+            </tr>
+            <tr>
+                <td>Form6</td>
+                <td>Form</td>
+                <td>
+DataReport5</td>
+                <td>
+None</td>
+            </tr>
+            <tr>
+                <td>Form7</td>
+                <td>Form</td>
+                <td>
+DataReport7</td>
+                <td>
+None</td>
+            </tr>
+            <tr>
+                <td>Form8</td>
+                <td>Form</td>
+                <td>
+DataReport6</td>
+                <td>
+None</td>
+            </tr>
+            <tr>
+                <td>MDIForm1</td>
+                <td>Form</td>
+                <td>
+medd</td>
+                <td>
+Form1</td>
+            </tr>
+            <tr>
+                <td>Module1</td>
+                <td>Module</td>
+                <td>
+None</td>
+                <td>
+None</td>
+            </tr>
+            <tr>
+                <td>medd</td>
+                <td>Form</td>
+                <td>
+DataReport4, Form1</td>
+                <td>
+MDIForm1</td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        function searchTable() {
+            const searchTerm = document.getElementById('table-search').value.toLowerCase();
+            const table = document.getElementById('dependency-table');
+            const rows = table.getElementsByTagName('tr');
+
+            // Skip header row
+            for (let i = 1; i < rows.length; i++) {
+                const rowText = rows[i].textContent.toLowerCase();
+                if (rowText.includes(searchTerm)) {
+                    rows[i].style.display = '';
+                } else {
+                    rows[i].style.display = 'none';
+                }
+            }
+        }
+    </script>
+    
+    <div class='dependency-graph'>
+        <h2>Visual Dependency Diagrams</h2>
+        <p>Select different views to explore the project architecture:</p>
+
+        <div class="diagram-tabs">
+            <button class="tab-button active" onclick="switchTab('core-architecture')">Core Architecture</button>
+            <button class="tab-button" onclick="switchTab('form-relationships')">Form Relationships</button>
+            <button class="tab-button" onclick="switchTab('business-logic')">Business Logic</button>
+            <button class="tab-button" onclick="switchTab('focus-mode')">Focus Mode</button>
+        </div>
+
+        <div class="tab-content" id="core-architecture" style="display: block;">
+            <h3>Core Architecture View</h3>
+            <p>This diagram shows the 20 most connected components in the project.</p>
+            <div class="filter-controls">
+                <button id="core-expand-all" class="control-button">Expand All</button>
+                <button id="core-collapse-all" class="control-button">Collapse All</button>
+            </div>
+            <div id="core-diagram" class="mermaid">
+    graph LR
+    core0["Form1"]:::form
+    core1["medd"]:::form
+    core2["MDIForm1"]:::form
+    core3["Form7"]:::form
+    core4["Form8"]:::form
+    core5["Form3"]:::form
+    core6["Form4"]:::form
+    core7["Form5"]:::form
+    core8["Form2"]:::form
+    core9["Form6"]:::form
+    core10["DataReport1"]:::designer
+    core11["DataReport2"]:::designer
+    core12["DataReport3"]:::designer
+    core13["DataReport4"]:::designer
+    core14["DataReport5"]:::designer
+    core15["DataReport6"]:::designer
+    core16["DataReport7"]:::designer
+    core17["DataReport8"]:::designer
+    core18["Form10"]:::form
+    core19["Module1"]:::module
+    core0 --> core2
+    core1 --> core13
+    core1 --> core0
+    core2 --> core1
+    core3 --> core16
+    core4 --> core15
+    core5 --> core11
+    core6 --> core12
+    core7 --> core17
+    core8 --> core10
+    core9 --> core14
+    core18 --> core0
+
+    classDef form fill:#e3f2fd,stroke:#2196f3,stroke-width:2px,color:#0d47a1
+    classDef module fill:#e8f5e9,stroke:#4caf50,stroke-width:2px,color:#1b5e20
+    classDef cls fill:#fff3e0,stroke:#ff9800,stroke-width:2px,color:#e65100
+    classDef usercontrol fill:#f3e5f5,stroke:#9c27b0,stroke-width:2px,color:#4a148c
+    classDef propertypage fill:#fffde7,stroke:#ffc107,stroke-width:2px,color:#ff6f00
+    classDef designer fill:#ffebee,stroke:#f44336,stroke-width:2px,color:#b71c1c
+    </div>
+        </div>
+
+        <div class="tab-content" id="form-relationships" style="display: none;">
+            <h3>Form Relationships View</h3>
+            <p>This diagram shows only the relationships between forms.</p>
+            <div class="filter-controls">
+                <input type="text" id="form-search" placeholder="Search forms..." class="search-control">
+                <button id="form-apply-search" class="control-button">Filter</button>
+            </div>
+            <div id="form-diagram" class="mermaid">
+    graph LR
+    form0["Form7"]
+    form1["Form8"]
+    form2["Form1"]
+    form3["Form3"]
+    form4["Form4"]
+    form5["Form5"]
+    form6["MDIForm1"]
+    form7["Form2"]
+    form8["Form6"]
+    form9["medd"]
+    form10["Form10"]
+    form2 --> form6
+    form6 --> form9
+    form9 --> form2
+    form10 --> form2
+
+    classDef default fill:#e3f2fd,stroke:#2196f3,stroke-width:2px,color:#0d47a1
+    </div>
+        </div>
+
+        <div class="tab-content" id="business-logic" style="display: none;">
+            <h3>Business Logic View</h3>
+            <p>This diagram shows classes and their key dependencies.</p>
+            <div id="business-diagram" class="mermaid">
+    graph LR
+
+    classDef cls fill:#fff3e0,stroke:#ff9800,stroke-width:2px,color:#e65100
+    classDef form fill:#e3f2fd,stroke:#2196f3,stroke-width:2px,color:#0d47a1
+    classDef module fill:#e8f5e9,stroke:#4caf50,stroke-width:2px,color:#1b5e20
+    classDef usercontrol fill:#f3e5f5,stroke:#9c27b0,stroke-width:2px,color:#4a148c
+    classDef propertypage fill:#fffde7,stroke:#ffc107,stroke-width:2px,color:#ff6f00
+    classDef designer fill:#ffebee,stroke:#f44336,stroke-width:2px,color:#b71c1c
+    </div>
+        </div>
+
+        <div class="tab-content" id="focus-mode" style="display: none;">
+            <h3>Focus Mode</h3>
+            <p>Explore the direct dependencies of a selected component.</p>
+            <div class="filter-controls" style="margin-bottom: 15px;">
+                <select id="focus-component" class="component-select" style="padding: 8px; min-width: 250px; margin-right: 10px;">
+                    <option value="">Select a component...</option>
+                        <option value="DataEnvironment1">DataEnvironment1 (Designer)</option>
+                    <option value="DataEnvironment2">DataEnvironment2 (Designer)</option>
+                    <option value="DataEnvironment3">DataEnvironment3 (Designer)</option>
+                    <option value="DataEnvironment4">DataEnvironment4 (Designer)</option>
+                    <option value="DataEnvironment5">DataEnvironment5 (Designer)</option>
+                    <option value="DataEnvironment6">DataEnvironment6 (Designer)</option>
+                    <option value="DataEnvironment7">DataEnvironment7 (Designer)</option>
+                    <option value="DataEnvironment8">DataEnvironment8 (Designer)</option>
+                    <option value="DataReport1">DataReport1 (Designer)</option>
+                    <option value="DataReport2">DataReport2 (Designer)</option>
+                    <option value="DataReport3">DataReport3 (Designer)</option>
+                    <option value="DataReport4">DataReport4 (Designer)</option>
+                    <option value="DataReport5">DataReport5 (Designer)</option>
+                    <option value="DataReport6">DataReport6 (Designer)</option>
+                    <option value="DataReport7">DataReport7 (Designer)</option>
+                    <option value="DataReport8">DataReport8 (Designer)</option>
+                    <option value="Form1">Form1 (Form)</option>
+                    <option value="Form10">Form10 (Form)</option>
+                    <option value="Form2">Form2 (Form)</option>
+                    <option value="Form3">Form3 (Form)</option>
+                    <option value="Form4">Form4 (Form)</option>
+                    <option value="Form5">Form5 (Form)</option>
+                    <option value="Form6">Form6 (Form)</option>
+                    <option value="Form7">Form7 (Form)</option>
+                    <option value="Form8">Form8 (Form)</option>
+                    <option value="MDIForm1">MDIForm1 (Form)</option>
+                    <option value="Module1">Module1 (Module)</option>
+                    <option value="medd">medd (Form)</option>
+
+                </select>
+                <label class="depth-control" style="margin-right: 10px;">
+                    <span>Depth:</span>
+                    <select id="focus-depth">
+                        <option value="1">1 level</option>
+                        <option value="2" selected>2 levels</option>
+                        <option value="3">3 levels</option>
+                    </select>
+                </label>
+                <button id="focus-generate" class="control-button" style="padding: 8px 16px; background: #2196f3; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                    Generate
+                </button>
+            </div>
+
+            <!-- Simple container for the dynamically generated HTML tables -->
+            <div id="focus-diagram">
+                <div style="padding: 20px; text-align: center; background-color: #f5f5f5; border-radius: 4px;">
+                    Select a component and click Generate to view its dependencies
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Store project data for use in dynamic diagrams
+        const projectData = {"components": {"Form7": {"type": "Form", "dependencies": ["DataReport7"], "dependents": []}, "Form8": {"type": "Form", "dependencies": ["DataReport6"], "dependents": []}, "Form1": {"type": "Form", "dependencies": ["MDIForm1"], "dependents": ["medd", "Form10"]}, "Form3": {"type": "Form", "dependencies": ["DataReport2"], "dependents": []}, "Form4": {"type": "Form", "dependencies": ["DataReport3"], "dependents": []}, "Form5": {"type": "Form", "dependencies": ["DataReport8"], "dependents": []}, "MDIForm1": {"type": "Form", "dependencies": ["medd"], "dependents": ["Form1"]}, "Form2": {"type": "Form", "dependencies": ["DataReport1"], "dependents": []}, "Form6": {"type": "Form", "dependencies": ["DataReport5"], "dependents": []}, "medd": {"type": "Form", "dependencies": ["DataReport4", "Form1"], "dependents": ["MDIForm1"]}, "Module1": {"type": "Module", "dependencies": [], "dependents": []}, "DataReport1": {"type": "Designer", "dependencies": [], "dependents": ["Form2"]}, "DataEnvironment1": {"type": "Designer", "dependencies": [], "dependents": []}, "DataReport2": {"type": "Designer", "dependencies": [], "dependents": ["Form3"]}, "DataEnvironment2": {"type": "Designer", "dependencies": [], "dependents": []}, "DataReport3": {"type": "Designer", "dependencies": [], "dependents": ["Form4"]}, "DataEnvironment3": {"type": "Designer", "dependencies": [], "dependents": []}, "DataReport4": {"type": "Designer", "dependencies": [], "dependents": ["medd"]}, "DataEnvironment4": {"type": "Designer", "dependencies": [], "dependents": []}, "DataReport5": {"type": "Designer", "dependencies": [], "dependents": ["Form6"]}, "DataEnvironment5": {"type": "Designer", "dependencies": [], "dependents": []}, "DataReport6": {"type": "Designer", "dependencies": [], "dependents": ["Form8"]}, "DataEnvironment6": {"type": "Designer", "dependencies": [], "dependents": []}, "DataReport7": {"type": "Designer", "dependencies": [], "dependents": ["Form7"]}, "DataEnvironment7": {"type": "Designer", "dependencies": [], "dependents": []}, "DataReport8": {"type": "Designer", "dependencies": [], "dependents": ["Form5"]}, "DataEnvironment8": {"type": "Designer", "dependencies": [], "dependents": []}, "Form10": {"type": "Form", "dependencies": ["Form1"], "dependents": []}}};
+
+        // Tab switching functionality
+        function switchTab(tabId) {
+            // Hide all tab contents
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].style.display = 'none';
+            }
+
+            // Deactivate all tab buttons
+            const tabButtons = document.getElementsByClassName('tab-button');
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove('active');
+            }
+
+            // Show selected tab content and activate button
+            document.getElementById(tabId).style.display = 'block';
+
+            // Find and activate the clicked button
+            for (let i = 0; i < tabButtons.length; i++) {
+                if (tabButtons[i].getAttribute('onclick').includes(tabId)) {
+                    tabButtons[i].classList.add('active');
+                }
+            }
+        }
+
+        // Wait for page load
+        window.addEventListener('load', function() {
+            // Initialize Focus Mode
+            document.getElementById('focus-generate').addEventListener('click', function() {
+                generateFocusDiagram();
+            });
+
+            // Form search functionality
+            document.getElementById('form-apply-search').addEventListener('click', function() {
+                const searchTerm = document.getElementById('form-search').value.toLowerCase();
+                filterFormDiagram(searchTerm);
+            });
+
+            // Core diagram expand/collapse
+            document.getElementById('core-expand-all').addEventListener('click', function() {
+                expandAllNodes('core-diagram');
+            });
+
+            document.getElementById('core-collapse-all').addEventListener('click', function() {
+                collapseAllNodes('core-diagram');
+            });
+        });
+
+        // Function to escape HTML for safe insertion
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Modified function that uses dynamic tables instead of Mermaid diagrams
+        function generateFocusDiagram() {
+            const componentName = document.getElementById('focus-component').value;
+            const depth = parseInt(document.getElementById('focus-depth').value);
+            const diagramElement = document.getElementById('focus-diagram');
+
+            // Show loading message
+            diagramElement.innerHTML = '<div style="padding: 20px; text-align: center;">Generating diagram...</div>';
+
+            if (!componentName) {
+                diagramElement.innerHTML = '<div class="error-message">Please select a component first</div>';
+                return;
+            }
+
+            // Create a simple HTML table showing dependencies instead of trying to render with Mermaid
+            let tableHTML = `<h4>Direct Dependencies for: ${escapeHtml(componentName)}</h4>`;
+
+            // Get component information
+            const component = projectData.components[componentName];
+            if (!component) {
+                diagramElement.innerHTML = '<div class="error-message">Component data not found</div>';
+                return;
+            }
+
+            // Add dependencies table
+            if (component.dependencies && component.dependencies.length > 0) {
+                tableHTML += `<h5>Dependencies (${component.dependencies.length}):</h5>`;
+                tableHTML += '<table class="dependency-table" style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">';
+                tableHTML += '<tr><th style="text-align: left; padding: 8px; border: 1px solid #ddd; background-color: #f5f5f5;">Component</th><th style="text-align: left; padding: 8px; border: 1px solid #ddd; background-color: #f5f5f5;">Type</th></tr>';
+
+                component.dependencies.forEach(dep => {
+                    const depComponent = projectData.components[dep];
+                    const type = depComponent ? depComponent.type : "Unknown";
+                    const typeClass = type.toLowerCase() === "class" ? "cls" : type.toLowerCase();
+
+                    tableHTML += `<tr>`;
+                    tableHTML += `<td style="padding: 8px; border: 1px solid #ddd;"><span class="component ${typeClass}" style="padding: 2px 5px; border-radius: 3px;">${escapeHtml(dep)}</span></td>`;
+                    tableHTML += `<td style="padding: 8px; border: 1px solid #ddd;">${escapeHtml(type)}</td>`;
+                    tableHTML += `</tr>`;
+                });
+
+                tableHTML += '</table>';
+            } else {
+                tableHTML += '<p>This component has no dependencies.</p>';
+            }
+
+            // Add dependents table
+            if (component.dependents && component.dependents.length > 0) {
+                tableHTML += `<h5>Referenced By (${component.dependents.length}):</h5>`;
+                tableHTML += '<table class="dependency-table" style="width: 100%; border-collapse: collapse;">';
+                tableHTML += '<tr><th style="text-align: left; padding: 8px; border: 1px solid #ddd; background-color: #f5f5f5;">Component</th><th style="text-align: left; padding: 8px; border: 1px solid #ddd; background-color: #f5f5f5;">Type</th></tr>';
+
+                component.dependents.forEach(dep => {
+                    const depComponent = projectData.components[dep];
+                    const type = depComponent ? depComponent.type : "Unknown";
+                    const typeClass = type.toLowerCase() === "class" ? "cls" : type.toLowerCase();
+
+                    tableHTML += `<tr>`;
+                    tableHTML += `<td style="padding: 8px; border: 1px solid #ddd;"><span class="component ${typeClass}" style="padding: 2px 5px; border-radius: 3px;">${escapeHtml(dep)}</span></td>`;
+                    tableHTML += `<td style="padding: 8px; border: 1px solid #ddd;">${escapeHtml(type)}</td>`;
+                    tableHTML += `</tr>`;
+                });
+
+                tableHTML += '</table>';
+            } else {
+                tableHTML += '<p>This component is not referenced by any other component.</p>';
+            }
+
+            // Set the HTML content
+            diagramElement.innerHTML = tableHTML;
+
+            // Display a message about Mermaid diagrams
+            const infoMessage = document.createElement('div');
+            infoMessage.style.marginTop = '20px';
+            infoMessage.style.padding = '10px';
+            infoMessage.style.backgroundColor = '#f8f9fa';
+            infoMessage.style.border = '1px solid #ddd';
+            infoMessage.style.borderRadius = '4px';
+            infoMessage.innerHTML = '<p><strong>Note:</strong> Mermaid diagram generation is currently under maintenance. We are showing tabular dependency information instead.</p>';
+            diagramElement.appendChild(infoMessage);
+        }
+
+        // Filter form diagram based on search term
+        function filterFormDiagram(searchTerm) {
+            // Implementation would filter and redraw the form diagram
+            console.log("Filtering forms by:", searchTerm);
+            // For now, just show a message - actual implementation would redraw the diagram
+            alert("Form filtering is being implemented. Search term: " + searchTerm);
+        }
+
+        // Expand all nodes in a diagram
+        function expandAllNodes(diagramId) {
+            // Implementation would expand all collapsible nodes
+            console.log("Expanding all nodes in", diagramId);
+            // For now, just show a message - actual implementation would interact with Mermaid API
+            alert("Node expansion is being implemented for " + diagramId);
+        }
+
+        // Collapse all nodes in a diagram
+        function collapseAllNodes(diagramId) {
+            // Implementation would collapse all expanded nodes
+            console.log("Collapsing all nodes in", diagramId);
+            // For now, just show a message - actual implementation would interact with Mermaid API
+            alert("Node collapsing is being implemented for " + diagramId);
+        }
+    </script>
+    
+    <!-- Mermaid initialization with robust error handling -->
+    <script type="module">
+        // Load Mermaid with fallback options
+        async function loadMermaid() {
+            try {
+                // First attempt - primary CDN
+                return await import('https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.esm.min.mjs');
+            } catch (e) {
+                console.warn("Primary CDN failed, trying fallback", e);
+                try {
+                    // Fallback CDN
+                    return await import('https://unpkg.com/mermaid@10.6.1/dist/mermaid.esm.min.mjs');
+                } catch (e2) {
+                    console.error("All Mermaid CDNs failed", e2);
+                    throw new Error("Failed to load Mermaid");
+                }
+            }
+        }
+
+        window.addEventListener('load', async function() {
+            try {
+                // Load Mermaid
+                const mermaidModule = await loadMermaid();
+                window.mermaid = mermaidModule.default;
+
+                // Configure for better performance with large diagrams
+                window.mermaid.initialize({
+                    startOnLoad: false,
+                    securityLevel: 'loose',
+                    theme: 'default',
+                    logLevel: 'error',
+                    flowchart: {
+                        useMaxWidth: true,
+                        htmlLabels: true,
+                        curve: 'basis',
+                        diagramPadding: 8,
+                        nodeSpacing: 60,
+                        rankSpacing: 100
+                    },
+                    fontFamily: 'Arial, sans-serif',
+                    fontSize: 12
+                });
+
+                // Initially render all visible diagrams with timeout protection
+                const diagrams = document.querySelectorAll('.tab-content:not([style*="display: none"]) .mermaid');
+                for (const diagram of diagrams) {
+                    try {
+                        await renderWithTimeout(diagram);
+                    } catch (error) {
+                        console.error("Error rendering diagram:", error);
+                        showRenderError(diagram, error.message);
+                    }
+                }
+
+                // Add rendering for tab changes
+                const tabButtons = document.querySelectorAll('.tab-button');
+                for (const button of tabButtons) {
+                    button.addEventListener('click', async function() {
+                        const tabId = this.getAttribute('onclick').match(/'([^']+)'/)[1];
+                        const tabContent = document.getElementById(tabId);
+                        const diagrams = tabContent.querySelectorAll('.mermaid');
+
+                        for (const diagram of diagrams) {
+                            // Only render if not already rendered
+                            if (!diagram.querySelector('svg')) {
+                                try {
+                                    await renderWithTimeout(diagram);
+                                } catch (error) {
+                                    console.error("Error rendering diagram on tab change:", error);
+                                    showRenderError(diagram, error.message);
+                                }
+                            }
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error("Failed to initialize Mermaid:", error);
+                document.querySelectorAll('.mermaid').forEach(diagram => {
+                    showRenderError(diagram, "Failed to load the diagram library. This might be due to network issues.");
+                });
+            }
+        });
+
+        // Render diagram with timeout protection
+        async function renderWithTimeout(element) {
+            return new Promise((resolve, reject) => {
+                const timeoutId = setTimeout(() => {
+                    reject(new Error("Diagram rendering timed out - diagram may be too complex"));
+                }, 10000); // 10 second timeout
+
+                try {
+                    const id = 'mermaid-' + Math.random().toString(36).substr(2, 9);
+                    window.mermaid.mermaidAPI.render(id, element.textContent)
+                        .then(result => {
+                            clearTimeout(timeoutId);
+                            element.innerHTML = result.svg;
+
+                            // Add zoom and pan controls to SVG
+                            addDiagramControls(element);
+
+                            resolve();
+                        })
+                        .catch(err => {
+                            clearTimeout(timeoutId);
+                            reject(err);
+                        });
+                } catch (error) {
+                    clearTimeout(timeoutId);
+                    reject(error);
+                }
+            });
+        }
+
+        // Show error message when rendering fails
+        function showRenderError(element, message) {
+            element.innerHTML = 
+                '<div style="padding: 20px; background-color: #ffebee; border: 1px solid #f44336; border-radius: 5px;">' +
+                '<h3 style="color: #d32f2f; margin-top: 0;">Diagram Rendering Error</h3>' +
+                '<p>' + message + '</p>' +
+                '<p>This might be because:</p>' +
+                '<ul>' +
+                '<li>The diagram has too many components and relationships</li>' +
+                '<li>The browser has limited resources</li>' +
+                '<li>Try using the Component Relationship Explorer instead</li>' +
+                '</ul>' +
+                '</div>';
+        }
+
+        // Add diagram controls (zoom, pan)
+        function addDiagramControls(container) {
+            const svgElement = container.querySelector('svg');
+            if (!svgElement) return;
+
+            let zoom = 1;
+            let pan = { x: 0, y: 0 };
+            let isDragging = false;
+            let startPoint = { x: 0, y: 0 };
+
+            // Create controls container with improved positioning
+            const controlsContainer = document.createElement('div');
+            controlsContainer.className = 'diagram-controls';
+            controlsContainer.style.position = 'absolute';
+            controlsContainer.style.top = '10px';
+            controlsContainer.style.right = '10px';
+            controlsContainer.style.zIndex = '1000'; // Ensure controls are above the diagram
+            controlsContainer.style.padding = '5px';
+            controlsContainer.style.borderRadius = '4px';
+            controlsContainer.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+            controlsContainer.style.boxShadow = '0 1px 3px rgba(0,0,0,0.2)';
+
+            // Add zoom controls with improved styling
+            const zoomInButton = document.createElement('button');
+            zoomInButton.textContent = '+';
+            zoomInButton.title = 'Zoom In';
+            zoomInButton.style.padding = '3px 8px';
+            zoomInButton.style.marginRight = '4px';
+
+            const zoomOutButton = document.createElement('button');
+            zoomOutButton.textContent = '-';
+            zoomOutButton.title = 'Zoom Out';
+            zoomOutButton.style.padding = '3px 8px';
+            zoomOutButton.style.marginRight = '4px';
+
+            const resetButton = document.createElement('button');
+            resetButton.textContent = 'Reset';
+            resetButton.title = 'Reset View';
+            resetButton.style.padding = '3px 8px';
+
+            controlsContainer.appendChild(zoomInButton);
+            controlsContainer.appendChild(zoomOutButton);
+            controlsContainer.appendChild(resetButton);
+
+            // Add padding to the container to make room for controls
+            container.style.paddingTop = '40px';
+            container.style.position = 'relative';
+            container.appendChild(controlsContainer);
+
+            // Make SVG draggable for panning
+            svgElement.style.cursor = 'grab';
+
+            svgElement.addEventListener('mousedown', function(e) {
+                if (e.button === 0) { // Left mouse button
+                    isDragging = true;
+                    startPoint = { x: e.clientX, y: e.clientY };
+                    svgElement.style.cursor = 'grabbing';
+                    e.preventDefault();
+                }
+            });
+
+            document.addEventListener('mousemove', function(e) {
+                if (isDragging) {
+                    const dx = e.clientX - startPoint.x;
+                    const dy = e.clientY - startPoint.y;
+
+                    pan.x += dx;
+                    pan.y += dy;
+
+                    startPoint = { x: e.clientX, y: e.clientY };
+                    updateTransform();
+                }
+            });
+
+            document.addEventListener('mouseup', function() {
+                isDragging = false;
+                svgElement.style.cursor = 'grab';
+            });
+
+            // Add button functionality
+            zoomInButton.addEventListener('click', function() {
+                zoom = Math.min(zoom + 0.1, 3); // Cap zoom at 3x
+                updateTransform();
+            });
+
+            zoomOutButton.addEventListener('click', function() {
+                zoom = Math.max(zoom - 0.1, 0.3); // Minimum zoom of 0.3x
+                updateTransform();
+            });
+
+            resetButton.addEventListener('click', function() {
+                zoom = 1;
+                pan = { x: 0, y: 0 };
+                updateTransform();
+            });
+
+            // Update transform function
+            function updateTransform() {
+                svgElement.style.transform = `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`;
+                svgElement.style.transformOrigin = 'center';
+            }
+        }
+    </script>
+    
+    <div style="margin-top: 30px; text-align: center;">
+        <button id="exportSVG" class="button" style="margin-right: 10px;">Export Diagram as SVG</button>
+        <button id="exportPNG" class="button" style="background-color: #2ecc71;">Export Diagram as PNG</button>
+    </div>
+
+    <script>
+        document.getElementById('exportSVG').addEventListener('click', function() {
+            // Find the active tab's diagram
+            const activeTab = document.querySelector('.tab-content[style*="display: block"]');
+            const svgElement = activeTab.querySelector('svg');
+            if (!svgElement) {
+                alert('No SVG diagram found to export');
+                return;
+            }
+
+            // Create a copy of the SVG to manipulate for export
+            const svgCopy = svgElement.cloneNode(true);
+            const svgData = new XMLSerializer().serializeToString(svgCopy);
+            const blob = new Blob([svgData], {type: 'image/svg+xml'});
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Project1_dependency_diagram.svg';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+
+        document.getElementById('exportPNG').addEventListener('click', function() {
+            // Find the active tab's diagram
+            const activeTab = document.querySelector('.tab-content[style*="display: block"]');
+            const svgElement = activeTab.querySelector('svg');
+            if (!svgElement) {
+                alert('No SVG diagram found to export');
+                return;
+            }
+
+            // Create a canvas and draw the SVG on it
+            const canvas = document.createElement('canvas');
+            const svgRect = svgElement.getBoundingClientRect();
+            canvas.width = svgRect.width;
+            canvas.height = svgRect.height;
+            const ctx = canvas.getContext('2d');
+
+            // Create an image from the SVG
+            const img = new Image();
+            const svgData = new XMLSerializer().serializeToString(svgElement);
+            const svgBlob = new Blob([svgData], {type: 'image/svg+xml;charset=utf-8'});
+            const url = URL.createObjectURL(svgBlob);
+
+            img.onload = function() {
+                ctx.drawImage(img, 0, 0);
+                URL.revokeObjectURL(url);
+
+                // Convert canvas to PNG
+                try {
+                    const pngUrl = canvas.toDataURL('image/png');
+                    const a = document.createElement('a');
+                    a.href = pngUrl;
+                    a.download = 'Project1_dependency_diagram.png';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                } catch(e) {
+                    alert('Failed to export as PNG. This may be due to CORS restrictions with external SVG content.');
+                    console.error(e);
+                }
+            };
+
+            img.src = url;
+        });
+    </script>
+    
+    <footer>
+        <p>Generated on 2025-03-07 14:32:42</p>
+        <p>VB6 Project Mapper - A tool for analyzing Visual Basic 6.0 projects</p>
+    </footer>
+</body>
+</html>
+    

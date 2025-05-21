@@ -1,0 +1,288 @@
+{
+    "project": {
+        "name": "ComplexProject",
+        "path": "tests\\samples",
+        "filename": "complex_project.vbp"
+    },
+    "components": [
+        {
+            "name": "frmMain",
+            "type": "Form",
+            "filename": "frmMain.frm",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "frmOptions",
+            "type": "Form",
+            "filename": "frmOptions.frm",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "frmAbout",
+            "type": "Form",
+            "filename": "frmAbout.frm",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "frmCustomer",
+            "type": "Form",
+            "filename": "frmCustomer.frm",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "frmReport",
+            "type": "Form",
+            "filename": "frmReport.frm",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "frmLogin",
+            "type": "Form",
+            "filename": "frmLogin.frm",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "frmSplash",
+            "type": "Form",
+            "filename": "frmSplash.frm",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "frmProgress",
+            "type": "Form",
+            "filename": "frmProgress.frm",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "modUtility",
+            "type": "Module",
+            "filename": "modUtility",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "modDatabase",
+            "type": "Module",
+            "filename": "modDatabase",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "modGlobal",
+            "type": "Module",
+            "filename": "modGlobal",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "modErrorHandler",
+            "type": "Module",
+            "filename": "modErrorHandler",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "modRegistry",
+            "type": "Module",
+            "filename": "modRegistry",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "clsDatabase",
+            "type": "Class",
+            "filename": "clsDatabase",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "clsCustomer",
+            "type": "Class",
+            "filename": "clsCustomer",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "clsProduct",
+            "type": "Class",
+            "filename": "clsProduct",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "clsOrder",
+            "type": "Class",
+            "filename": "clsOrder",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "clsExport",
+            "type": "Class",
+            "filename": "clsExport",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "clsImport",
+            "type": "Class",
+            "filename": "clsImport",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "clsReportEngine",
+            "type": "Class",
+            "filename": "clsReportEngine",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "frmProducts",
+            "type": "Form",
+            "filename": "frmProducts.frm",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "frmOrders",
+            "type": "Form",
+            "filename": "frmOrders.frm",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "frmSearch",
+            "type": "Form",
+            "filename": "frmSearch.frm",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "frmExport",
+            "type": "Form",
+            "filename": "frmExport.frm",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "frmImport",
+            "type": "Form",
+            "filename": "frmImport.frm",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "frmEmail",
+            "type": "Form",
+            "filename": "frmEmail.frm",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "modSecurity",
+            "type": "Module",
+            "filename": "modSecurity",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "frmUserAdmin",
+            "type": "Form",
+            "filename": "frmUserAdmin.frm",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "frmChangePassword",
+            "type": "Form",
+            "filename": "frmChangePassword.frm",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        },
+        {
+            "name": "frmBackup",
+            "type": "Form",
+            "filename": "frmBackup.frm",
+            "dependencies": [],
+            "dependents": [],
+            "dependency_count": 0,
+            "dependent_count": 0
+        }
+    ],
+    "statistics": {
+        "total_components": 30,
+        "forms": 17,
+        "modules": 6,
+        "classes": 7,
+        "user_controls": 0,
+        "property_pages": 0,
+        "designers": 0
+    }
+}
