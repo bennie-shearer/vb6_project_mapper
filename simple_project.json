@@ -1,0 +1,52 @@
+{
+    "project": {
+        "name": "SimpleProject",
+        "path": "tests\\samples",
+        "filename": "simple_project.vbp"
+    },
+    "components": [
+        {
+            "name": "frmMain",
+            "type": "Form",
+            "filename": "frmMain.frm",
+            "dependencies": [
+                "modMain",
+                "clsData"
+            ],
+            "dependents": [],
+            "dependency_count": 2,
+            "dependent_count": 0
+        },
+        {
+            "name": "modMain",
+            "type": "Module",
+            "filename": "modMain",
+            "dependencies": [],
+            "dependents": [
+                "frmMain"
+            ],
+            "dependency_count": 0,
+            "dependent_count": 1
+        },
+        {
+            "name": "clsData",
+            "type": "Class",
+            "filename": "clsData",
+            "dependencies": [],
+            "dependents": [
+                "frmMain"
+            ],
+            "dependency_count": 0,
+            "dependent_count": 1
+        }
+    ],
+    "statistics": {
+        "total_components": 3,
+        "forms": 1,
+        "modules": 1,
+        "classes": 1,
+        "user_controls": 0,
+        "property_pages": 0,
+        "designers": 0
+    }
+}
